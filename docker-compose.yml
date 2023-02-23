@@ -1,0 +1,14 @@
+version: '3'
+services:
+  auth-service:
+    build: 
+      context: ./auth-service
+      dockerfile: Dockerfile
+  mongodb:
+    image: mongodb:latest
+    volumes:
+      - /users:/data/db
+    ports:
+     - 27017:27017
+volumes:
+  users:
