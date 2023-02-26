@@ -1,14 +1,28 @@
 version: '3'
 services:
   auth-service:
-    build: 
+    build:
       context: ./auth-service
       dockerfile: Dockerfile
-  mongodb:
-    image: mongodb:latest
-    volumes:
-      - /users:/data/db
     ports:
-     - 27017:27017
+      - 3000:3000
+    networks:
+      - auth-api-network
+    environment:
+      MONGODB_URL: 'mongodb'
+      MONGODB_PORT: 27017
+      MONGO_DB: 'auth'
+  mongodb:
+    image: mongo:latest
+    volumes:
+      - users:/data/db
+    ports:
+      - 27017:27017
+    networks:
+      - auth-api-network
+      
+networks:
+  auth-api-network:
+    driver: bridge
 volumes:
   users:

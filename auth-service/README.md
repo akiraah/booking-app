@@ -1,7 +1,11 @@
-# Awesome Project Build with TypeORM
+# authentication service
 
-Steps to run this project:
+Basic auth service with `/signup` and `/signin` endpoints.
 
-1. Run `npm i` command
-2. Setup database settings inside `data-source.ts` file
-3. Run `npm start` command
+## todo
+
+1. Return JWT token from the endpoints
+   1. should create refresh token for added layer of security
+2. Persist / capture the logins and tokens into a kv storage
+3. Publish an auth event to the kafka topic
+4. Work with API gateway / cognito

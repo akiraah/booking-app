@@ -4,7 +4,11 @@ import { app } from './app'
 const start = async () => {
   console.log('Connecting to mongodb instance...')
   try {
-    await mongoose.connect('mongodb://127.0.0.1/auth')
+    const url = process.env.MONGODB_URL || '127.0.0.1'
+    const port = process.env.MONGODB_PORT || 27017
+    const db = process.env.MONGODB_DB || 'auth'
+    console.log(`url : ${url} port ${port}`)
+    await mongoose.connect(`mongodb://${url}:${port}/${db}`)
     console.log('connected to mongodb')
   } catch (error) {
     console.log(error)
@@ -17,34 +21,3 @@ const start = async () => {
 start()
   .then(() => console.log('Commencing Auth Service...'))
   .catch((error) => console.log(error))
-
-// extract to the auth-service file
-// app.post('/signin', (req: Request, res: Response) => {
-//   res.set('Accept', 'application/json')
-//   console.log(`body: ${JSON.stringify(req.body)}`)
-//   const { email, password } = req.body
-//   // if (users[email]) {
-//   res.status(200)
-//   res.send({ message: 'User logged in.' })
-//   // }
-//   // res.status(400)
-//   // res.send({ message: 'User not found.' })
-// })
-
-// app.post('/signup', async (req: Request, res: Response) => {
-//   res.set('Accept', 'application/json')
-//   const { email, password } = req.body
-//   if (users[email]) {
-//     res.status(409)
-//     res.json({
-//       message: 'User already exists',
-//     })
-//   }
-//   const resp = await userSignUp({ email, password })
-//   console.log(`resp: ${JSON.stringify(resp)}`)
-//   users[email] = {
-//     email,
-//     password,
-//   }
-//   res.send({ message: 'Response Okay' })
-// })
